@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen_default">32px</dimen>
+    <dimen name="dimen_small">16px</dimen>
+    <dimen name="dimen_large">64px</dimen>
+    <dimen name="dimen_tv">52px</dimen>
+    <dimen name="text_size_default">18sp</dimen> <!-- sp veut dire taille pour le texte -->
+    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+</resources>

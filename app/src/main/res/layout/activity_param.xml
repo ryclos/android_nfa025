@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="center"
+    tools:context=".ParamActivity">
+
+    <RadioGroup
+        android:id="@+id/paramRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:padding="@dimen/dimen_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paramTvTaileTxt">
+
+        <RadioButton
+            android:id="@+id/paramRadioButtonSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/param_radio_button_small"
+            android:textSize="@dimen/text_size_small" />
+
+        <RadioButton
+            android:id="@+id/paramRadioButtonMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/param_radio_button_medium"
+            android:textSize="@dimen/text_size_default" />
+
+        <RadioButton
+            android:id="@+id/paramRadioButtonLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/param_radio_button_large"
+            android:textSize="@dimen/text_size_large" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/paramTvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:background="@color/purple"
+        android:padding="@dimen/dimen_default"
+        android:text="@string/param_title"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/paramSwitchDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:padding="@dimen/dimen_small"
+        android:text="@string/param_switch_darkmode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paramTvDarkMode" />
+
+    <TextView
+        android:id="@+id/paramTvTaileTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:padding="@dimen/dimen_small"
+        android:text="@string/param_text_size"
+        android:textAlignment="viewStart"
+        android:textColor="@color/purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paramTvTitle" />
+
+    <TextView
+        android:id="@+id/paramTvDarkMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:padding="@dimen/dimen_small"
+        android:text="@string/param_text_darkmode"
+        android:textColor="@color/purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paramRadioGroup" />
+
+    <TextView
+        android:id="@+id/paramTvTimeWeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:padding="@dimen/dimen_small"
+        android:text="@string/param_text_time_week"
+        android:textColor="@color/purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paramSwitchDark" />
+
+    <ProgressBar
+        android:id="@+id/paramProgressB"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:padding="@dimen/dimen_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paramTvTimeWeek" />
+
+    <Button
+        android:id="@+id/paramBtnPassForget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:layout_marginBottom="@dimen/dimen_default"
+        android:text="@string/param_reset_password"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

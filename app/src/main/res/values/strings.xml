@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">user</string>
+    <string name="connexion">Connexion</string>
+    <string name="descritpion">Descritpion</string>
+    <string name="pass">Mot de passe</string>
+    <string name="mail">Mail</string>
+
+    <string name="param_title">Paramètre</string>
+    <string name="param_text_size"><u>Taille du texte</u></string>
+    <string name="param_text_darkmode"><u>Mode sombre</u></string>
+    <string name="param_switch_darkmode">On/Off</string>
+    <string name="param_text_time_week"><u>Temps/Semaine</u></string>
+    <string name="param_reset_password">Mot de passe perdu</string>
+    <string name="param_radio_button_small">Petit</string>
+    <string name="param_radio_button_medium">Moyen</string>
+    <string name="param_radio_button_large">Grand</string>
+    <string name="settings">Settings</string>
+</resources>
