@@ -31,6 +31,8 @@ public class ParamActivity extends AppCompatActivity {
 
         sharedPreferencesDarkSwitch = getSharedPreferences("darkmode", Context.MODE_PRIVATE);
 
+        switchDarkMode.setChecked(sharedPreferencesDarkSwitch.getBoolean("darkModeEnabled", false));
+
         switchDarkMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
