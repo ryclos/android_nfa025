@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Définir le nom de la table Annonces et les noms des colonnes
     public static final String TABLE_ANNONCES = "annonces";
@@ -14,12 +17,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TITLE_ANNONCES = "title";
     public static final String COLUMN_PRICE_ANNONCES = "price";
     public static final String COLUMN_DESCRIPTION_ANNONCES = "description";
-    public static final String COLUMN_DATE_PUBLICATION = "date_publication";
-    public static final String COLUMN_DATE_FIN_PUBLICATION = "date_fin_publication";
-    public static final String COLUMN_DATE_CREATION = "date_creation";
-    public static final String COLUMN_DATE_MODIFICATION = "date_modification";
+    public static final String COLUMN_DATE_PUBLICATION_ANNONCES = "date_publication";
+    //public static final String COLUMN_DATE_FIN_PUBLICATION = "date_fin_publication";
+    //public static final String COLUMN_DATE_CREATION = "date_creation";
+    //public static final String COLUMN_DATE_MODIFICATION = "date_modification";
 
+    // Définir le nom de la table Personnes et les noms des colonnes
     //TODO FAIRE TABLE PERSONNE RÉCUPÉRER ID ANNONCE
+    public static final String TABLE_PERSONNES = "personnes";
+    public static final String COLUMN_LASTNAME_PERSONNES = "nom";
+    public static final String COLUMN_NAME_PERSONNES = "prenom";
+    public static final String COLUMN_EMAIL_PERSONNES = "email";
+    public static final String COLUMN_BIRTH_PERSONNES = "date_de_naissance";
+    public static final String COLUMN_DATE_ACCOUNT_CREATION_PERSONNES = "date_de_creation_de_compte";
+
+
 
     // Définir le nom de la base de données et sa version
     public static final String DATABASE_NAME = "db_l3";
@@ -32,10 +44,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_TITLE_ANNONCES + " text," +
                     COLUMN_PRICE_ANNONCES + " integer," +
                     COLUMN_DESCRIPTION_ANNONCES + " text," +
-                    COLUMN_DATE_PUBLICATION + " DATE," +
-                    COLUMN_DATE_FIN_PUBLICATION + " DATE," +
+                    COLUMN_DATE_PUBLICATION_ANNONCES + " DATE)";/* +
+                    /*COLUMN_DATE_FIN_PUBLICATION + " DATE," +
                     COLUMN_DATE_CREATION + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                    COLUMN_DATE_MODIFICATION + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
+                    COLUMN_DATE_MODIFICATION + " DATETIME DEFAULT CURRENT_TIMESTAMP)";*/
+
+    // Requête SQL pour créer la table Personnes
+    private static final String SQL_CREATE_TABLE_PERSONNES =
+            "CREATE TABLE " + TABLE_PERSONNES + " (" +
+                    "_id" + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLUMN_LASTNAME_PERSONNES + " text," +
+                    COLUMN_NAME_PERSONNES + " integer," +
+                    COLUMN_EMAIL_PERSONNES + " text," +
+                    COLUMN_BIRTH_PERSONNES + " DATE," +
+                    COLUMN_DATE_ACCOUNT_CREATION_PERSONNES + " DATE)";
 
     // Requête SQL pour supprimer la table si elle existe déjà
     private static final String SQL_DELETE_TABLE_ANNONCES =
@@ -49,19 +71,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Exécuter la requête de création de table pour la table Annonces lors de la création de la base de données
         db.execSQL(SQL_CREATE_TABLE_ANNONCES);
+        db.execSQL(SQL_CREATE_TABLE_PERSONNES);
 
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_TITLE_ANNONCES, "Titre de l'annonce");
-        values.put(DatabaseHelper.COLUMN_PRICE_ANNONCES, 100);
-        values.put(DatabaseHelper.COLUMN_DESCRIPTION_ANNONCES, "Description de l'annonce");
-        values.put(DatabaseHelper.COLUMN_DATE_PUBLICATION, "2022-04-15");
-        values.put(DatabaseHelper.COLUMN_DATE_FIN_PUBLICATION, "2022-04-30");
+        // Insérer une date date_publication lorsque l'annonce est inséré en base
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-        //Date date = new
+        Annonces a = new Annonces();
 
-        long newRowId = db.insert(DatabaseHelper.TABLE_ANNONCES, null, values);
+        // Ajouter une entrée à la table Annonces lors de la création de la base de données
+        ContentValues dataAnnounce = new ContentValues();
 
-        Log.d("Lignedb", "onCreate: " + newRowId);
+        dataAnnounce.put(DatabaseHelper.COLUMN_TITLE_ANNONCES, a.getTitle());
+        dataAnnounce.put(DatabaseHelper.COLUMN_PRICE_ANNONCES, a.getPrice());
+        dataAnnounce.put(DatabaseHelper.COLUMN_DESCRIPTION_ANNONCES, a.getDescription());
+        //values.put(DatabaseHelper.COLUMN_DATE_FIN_PUBLICATION, "2022-04-30");
+
+        String parseDateStrAnnounce = dateFormat.format(a.getDatePublication());
+        dataAnnounce.put(DatabaseHelper.COLUMN_DATE_PUBLICATION_ANNONCES, parseDateStrAnnounce);
+
+        long newRowIdAnnounce = db.insert(DatabaseHelper.TABLE_ANNONCES, null, dataAnnounce);
+
+        Log.d("INSERT_ANNOUNCE", "onCreate: " + newRowIdAnnounce);
+
+        // PERSONNES
+        Personnes p = new Personnes();
+
+        // Ajouter une entrée à la table Personnes lors de la création de la base de données
+        ContentValues dataPerson = new ContentValues();
+
+        dataPerson.put(DatabaseHelper.COLUMN_LASTNAME_PERSONNES, p.getLastname());
+        dataPerson.put(DatabaseHelper.COLUMN_NAME_PERSONNES, p.getName());
+        dataPerson.put(DatabaseHelper.COLUMN_EMAIL_PERSONNES, p.getEmail());
+        dataPerson.put(DatabaseHelper.COLUMN_BIRTH_PERSONNES, p.getBirth());
+
+        String parseDateStrPerson = dateFormat.format(p.getDateCreateAccount());
+        dataPerson.put(DatabaseHelper.COLUMN_DATE_ACCOUNT_CREATION_PERSONNES, parseDateStrPerson);
+
+        long newRowIdPerson = db.insert(DatabaseHelper.TABLE_PERSONNES, null, dataPerson);
+
+        Log.d("INSERT_PERSON", "onCreate: " + newRowIdPerson);
     }
 
     @Override
@@ -74,7 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllDataFromTable(String table) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from"+table,);
+        Cursor res = db.rawQuery("select * from " + table, null);
         return res;
     }
 }

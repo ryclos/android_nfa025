@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         values.put(DatabaseHelper.COLUMN_TITLE_ANNONCES, "Titre de l'annonce");
         values.put(DatabaseHelper.COLUMN_PRICE_ANNONCES, 100);
         values.put(DatabaseHelper.COLUMN_DESCRIPTION_ANNONCES, "Description de l'annonce");
-        values.put(DatabaseHelper.COLUMN_DATE_PUBLICATION, "2022-04-15");
-        values.put(DatabaseHelper.COLUMN_DATE_FIN_PUBLICATION, "2022-04-30");
+        //values.put(DatabaseHelper.COLUMN_DATE_PUBLICATION, "2022-04-15");
+        //values.put(DatabaseHelper.COLUMN_DATE_FIN_PUBLICATION, "2022-04-30");
 
         //Date date = new
 
