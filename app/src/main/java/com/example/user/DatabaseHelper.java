@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_ANNONCES =
             "CREATE TABLE " + TABLE_ANNONCES + " (" +
                     "_id" + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_TITLE_ANNONCES + " text," +
+                    COLUMN_TITLE_ANNONCES + " TEXT," +
                     COLUMN_PRICE_ANNONCES + " integer," +
                     COLUMN_DESCRIPTION_ANNONCES + " text," +
                     COLUMN_DATE_PUBLICATION_ANNONCES + " DATE)";/* +
@@ -49,18 +49,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_DATE_CREATION + " DATETIME DEFAULT CURRENT_TIMESTAMP," +
                     COLUMN_DATE_MODIFICATION + " DATETIME DEFAULT CURRENT_TIMESTAMP)";*/
 
+    // Requête SQL pour supprimer la table si elle existe déjà
+    private static final String SQL_DELETE_TABLE_ANNONCES =
+            "DROP TABLE IF EXISTS " + TABLE_ANNONCES;
+
     // Requête SQL pour créer la table Personnes
     private static final String SQL_CREATE_TABLE_PERSONNES =
             "CREATE TABLE " + TABLE_PERSONNES + " (" +
                     "_id" + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_LASTNAME_PERSONNES + " text," +
-                    COLUMN_NAME_PERSONNES + " integer," +
-                    COLUMN_EMAIL_PERSONNES + " text," +
+                    COLUMN_LASTNAME_PERSONNES + " TEXT," +
+                    COLUMN_NAME_PERSONNES + " TEXT," +
+                    COLUMN_EMAIL_PERSONNES + " TEXT," +
                     COLUMN_BIRTH_PERSONNES + " DATE," +
                     COLUMN_DATE_ACCOUNT_CREATION_PERSONNES + " DATE)";
 
     // Requête SQL pour supprimer la table si elle existe déjà
-    private static final String SQL_DELETE_TABLE_ANNONCES =
+    private static final String SQL_DELETE_TABLE_PERSONNES =
             "DROP TABLE IF EXISTS " + TABLE_ANNONCES;
 
     public DatabaseHelper(Context context) {
@@ -112,13 +116,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("INSERT_PERSON", "onCreate: " + newRowIdPerson);
     }
 
+    public boolean addNewAnnonces(Annonces a, SimpleDateFormat dateFormat) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        dateFormat.applyPattern("yyyy/MM/dd");
+
+        values.put(DatabaseHelper.COLUMN_TITLE_ANNONCES, a.getTitle());
+        values.put(DatabaseHelper.COLUMN_PRICE_ANNONCES, a.getPrice());
+        values.put(DatabaseHelper.COLUMN_DESCRIPTION_ANNONCES, a.getDescription());
+
+        String parseDateStr = dateFormat.format(a.getDatePublication());
+        values.put(DatabaseHelper.COLUMN_DATE_PUBLICATION_ANNONCES, parseDateStr);
+
+        return db.insert(DatabaseHelper.TABLE_ANNONCES, null, values) > 1 ? true : false;
+    }
+
+    public boolean addNewPersonnes(Personnes p, SimpleDateFormat dateFormat) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        dateFormat.applyPattern("yyyy/MM/dd");
+
+        values.put(DatabaseHelper.COLUMN_LASTNAME_PERSONNES, p.getLastname());
+        values.put(DatabaseHelper.COLUMN_NAME_PERSONNES, p.getName());
+        values.put(DatabaseHelper.COLUMN_EMAIL_PERSONNES, p.getEmail());
+        values.put(DatabaseHelper.COLUMN_BIRTH_PERSONNES, p.getBirth());
+
+        String parseDateStr = dateFormat.format(p.getDateCreateAccount());
+        values.put(DatabaseHelper.COLUMN_DATE_ACCOUNT_CREATION_PERSONNES, parseDateStr);
+
+        return db.insert(DatabaseHelper.TABLE_PERSONNES, null, values) > 1 ? true : false;
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Supprimer la table Annonces existante et créer une nouvelle version de la table si la version de la base de données change
         db.execSQL(SQL_DELETE_TABLE_ANNONCES);
+        db.execSQL(SQL_DELETE_TABLE_PERSONNES);
         onCreate(db);
     }
-
 
     public Cursor getAllDataFromTable(String table) {
         SQLiteDatabase db = this.getReadableDatabase();
